@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice - Entrenamiento Matemático</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="url(#gradient)" />
+                    <path d="M16 8L20 12H12L16 8Z" fill="white" />
+                    <path d="M12 14H20V22H12V14Z" fill="white" opacity="0.8" />
+                    <defs>
+                        <linearGradient id="gradient" x1="0" y1="0" x2="32" y2="32">
+                            <stop offset="0%" stop-color="#667eea" />
+                            <stop offset="100%" stop-color="#764ba2" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Math Practice</span>
+            </div>
+            <div class="score-container" id="scoreContainer">
+                <div class="score-item">
+                    <span class="score-label">Correctas</span>
+                    <span class="score-value correct" id="correctScore">0</span>
+                </div>
+                <div class="score-item">
+                    <span class="score-label">Incorrectas</span>
+                    <span class="score-value incorrect" id="incorrectScore">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <button class="tab-button active" data-tab="practice">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+                PRACTICAR
+            </button>
+            <button class="tab-button" data-tab="calculator">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="4" y="2" width="16" height="20" rx="2" />
+                    <line x1="8" y1="6" x2="16" y2="6" />
+                    <line x1="8" y1="10" x2="16" y2="10" />
+                    <line x1="8" y1="14" x2="16" y2="14" />
+                    <line x1="8" y1="18" x2="16" y2="18" />
+                </svg>
+                CALCULADORA
+            </button>
+        </div>
+
+        <!-- Practice Tab Content -->
+        <div class="tab-content active" id="practiceTab">
+            <!-- Mode Selection -->
+            <div class="mode-selection" id="modeSelection">
+                <h1 class="title">Elige tu Operación</h1>
+                <p class="subtitle">Selecciona el tipo de práctica matemática</p>
+
+                <div class="mode-grid">
+                    <button class="mode-card" data-mode="suma">
+                        <div class="mode-icon">+</div>
+                        <h3>Suma</h3>
+                        <p>Practica adiciones</p>
+                    </button>
+
+                    <button class="mode-card" data-mode="resta">
+                        <div class="mode-icon">−</div>
+                        <h3>Resta</h3>
+                        <p>Practica sustracciones</p>
+                    </button>
+
+                    <button class="mode-card" data-mode="multiplicacion">
+                        <div class="mode-icon">×</div>
+                        <h3>Multiplicación</h3>
+                        <p>Practica productos</p>
+                    </button>
+
+                    <button class="mode-card" data-mode="division">
+                        <div class="mode-icon">÷</div>
+                        <h3>División</h3>
+                        <p>Practica divisiones</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Section -->
+            <div class="quiz-section hidden" id="quizSection">
+                <div class="quiz-header">
+                    <button class="back-button" id="backButton">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M19 12H5M12 19l-7-7 7-7" />
+                        </svg>
+                        Volver
+                    </button>
+                    <div class="current-mode" id="currentMode"></div>
+                </div>
+
+                <div class="question-container">
+                    <div class="question-number">Pregunta <span id="questionNumber">1</span></div>
+                    <div class="question" id="question">5 + 3 = ?</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+
+                <div class="options-grid" id="optionsGrid">
+                    <!-- Options will be generated dynamically -->
+                </div>
+
+                <button class="next-button hidden" id="nextButton">
+                    Siguiente Pregunta
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section hidden" id="resultsSection">
+                <div class="results-card">
+                    <div class="results-icon">🎉</div>
+                    <h2 class="results-title">¡Sesión Completada!</h2>
+                    <div class="results-stats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="finalCorrect">0</div>
+                            <div class="stat-label">Correctas</div>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="finalIncorrect">0</div>
+                            <div class="stat-label">Incorrectas</div>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="finalPercentage">0%</div>
+                            <div class="stat-label">Precisión</div>
+                        </div>
+                    </div>
+                    <button class="restart-button" id="restartButton">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M1 4v6h6M23 20v-6h-6" />
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15" />
+                        </svg>
+                        Practicar de Nuevo
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- End Practice Tab -->
+
+        <!-- Calculator Tab Content -->
+        <div class="tab-content" id="calculatorTab">
+            <div class="calculator-container">
+                <h1 class="title">Calculadora Matemática</h1>
+                <p class="subtitle">Realiza operaciones de suma, resta, multiplicación y división</p>
+
+                <div class="calculator">
+                    <div class="calculator-display">
+                        <div class="operation-display" id="operationDisplay"></div>
+                        <div class="result-display" id="resultDisplay">0</div>
+                    </div>
+
+                    <div class="calculator-buttons">
+                        <button class="calc-btn function-btn" data-action="clear">C</button>
+                        <button class="calc-btn function-btn" data-action="delete">⌫</button>
+                        <button class="calc-btn function-btn" data-action="percentage">%</button>
+                        <button class="calc-btn operator-btn" data-operator="/">÷</button>
+
+                        <button class="calc-btn number-btn" data-number="7">7</button>
+                        <button class="calc-btn number-btn" data-number="8">8</button>
+                        <button class="calc-btn number-btn" data-number="9">9</button>
+                        <button class="calc-btn operator-btn" data-operator="*">×</button>
+
+                        <button class="calc-btn number-btn" data-number="4">4</button>
+                        <button class="calc-btn number-btn" data-number="5">5</button>
+                        <button class="calc-btn number-btn" data-number="6">6</button>
+                        <button class="calc-btn operator-btn" data-operator="-">−</button>
+
+                        <button class="calc-btn number-btn" data-number="1">1</button>
+                        <button class="calc-btn number-btn" data-number="2">2</button>
+                        <button class="calc-btn number-btn" data-number="3">3</button>
+                        <button class="calc-btn operator-btn" data-operator="+">+</button>
+
+                        <button class="calc-btn number-btn span-2" data-number="0">0</button>
+                        <button class="calc-btn number-btn" data-number=".">.</button>
+                        <button class="calc-btn equals-btn" data-action="equals">=</button>
+                    </div>
+
+                    <div class="calculator-history">
+                        <div class="history-header">
+                            <h3>Historial</h3>
+                            <button class="clear-history-btn" id="clearHistory">Limpiar</button>
+                        </div>
+                        <div class="history-list" id="historyList">
+                            <p class="history-empty">No hay operaciones aún</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Calculator Tab -->
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
